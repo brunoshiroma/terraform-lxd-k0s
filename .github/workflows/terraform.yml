@@ -1,15 +1,20 @@
-name: Release Binaries
+name: Terraform Plan
 
 on: [push, pull_request]
 
 jobs:
-    build:
+    terraform-plan:
       runs-on: ubuntu-latest
       name: terraform-plan
       steps:
+      - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
 
-      - run: terraform init
+      - id: init
+        run: terraform init
+
+      - id: validate
+        run: terraform validate
 
       - id: plan
         run: terraform plan
